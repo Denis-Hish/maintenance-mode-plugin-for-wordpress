@@ -428,7 +428,7 @@ class Maintenance_Mode_Plugin {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        height: 100vh;
+                        height: 100dvh;
                         margin: 0;
                         padding: 0;
                         box-sizing: border-box;
@@ -437,7 +437,7 @@ class Maintenance_Mode_Plugin {
                     section.maintenance {
                         position: relative;
                         width: 100%;
-                        height: 100vh;
+                        height: 100%;
                         overflow: hidden;
                         background-image: url(<?php echo esc_url(plugins_url('bg.jpg', __FILE__)); ?>);
                         background-color: #111;
@@ -464,7 +464,6 @@ class Maintenance_Mode_Plugin {
                         justify-content: center;
                         align-items: center;
                         flex-direction: column;
-                        height: 100dvh;
                         max-width: 800px;
                         margin: 0 auto;
                     }
@@ -495,13 +494,13 @@ class Maintenance_Mode_Plugin {
                     }
     
                     section.maintenance .content .title {
-                        font-size: 2.25em;
+                        font-size: 1.625em;
                         font-weight: 200;
                         margin-top: 1rem;
                     }
     
                     section.maintenance .content .subtitle {
-                        font-size: 2.5em;
+                        font-size: 1.625em;
                         margin-bottom: 1rem;
                     }
     
@@ -522,8 +521,8 @@ class Maintenance_Mode_Plugin {
     
                     section.maintenance .content .icon svg {
                         fill: #333;
-                        width: 100px;
-                        height: 100px;
+                        width: 60px;
+                        height: 60px;
                     }
     
                     @keyframes flicker {
