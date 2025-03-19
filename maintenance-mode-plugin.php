@@ -395,6 +395,9 @@ class Maintenance_Mode_Plugin {
     }
 
     public function display_maintenance_page() {
+        header('HTTP/1.1 503 Service Temporarily Unavailable');
+        header('Retry-After: 3600');
+
         $custom_html = get_option('maintenance_mode_custom_html', '');
         if (!empty($custom_html)) {
             echo $custom_html;
@@ -628,8 +631,6 @@ class Maintenance_Mode_Plugin {
             </html>
             <?php
         }
-        header('HTTP/1.1 503 Service Temporarily Unavailable');
-        header('Retry-After: 3600');
         exit;
     }
 
