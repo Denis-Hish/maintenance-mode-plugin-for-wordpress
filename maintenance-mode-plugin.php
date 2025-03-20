@@ -411,7 +411,7 @@ class Maintenance_Mode_Plugin {
             // Получаем название сайта
             $site_name = get_bloginfo('name');
     
-            // HTML-шаблон с переведенными строками
+            // HTML-шаблон с переводом
             ?>
             <!DOCTYPE html>
             <html lang="<?php echo esc_attr($browser_lang); ?>">
@@ -476,7 +476,6 @@ class Maintenance_Mode_Plugin {
                     section.maintenance .content p {
                         text-align: center;
                         text-wrap: balance;
-                        text-shadow: 0 15px 10px rgba(0, 0, 0, 0.5);
                         margin: 0;
                         letter-spacing: 2px;
                         animation: flicker-text 4s infinite;
@@ -484,7 +483,7 @@ class Maintenance_Mode_Plugin {
     
                     @keyframes flicker-text {
                         0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-                            text-shadow: 0 15px 10px rgba(0, 0, 0, 0.5);
+                            text-shadow: 0 0 50px rgba(246, 164, 1, 0.65);
                         }
                         20%, 24%, 55% {
                             text-shadow: none;
@@ -518,7 +517,6 @@ class Maintenance_Mode_Plugin {
                         color: #333;
                         border-radius: 50%;
                         border: 5px solid #ffaa01;
-                        box-shadow: 0 0 50px rgba(246, 164, 1, 0.25);
                         animation: flicker 4s infinite;
                     }
     
@@ -545,30 +543,39 @@ class Maintenance_Mode_Plugin {
                         display: flex;
                         color: #fff;
                         box-shadow: 0 15px 10px rgba(0, 0, 0, 0.5);
-                        transform: rotate(calc(var(--d) * 1deg)) translateY(calc(var(--y) * 1px));
-                    }
-    
-                    section.maintenance .scroll div {
+                        transform: rotate(calc(var(--d) * 1deg));
+                        }
+
+                        section.maintenance .scroll.top {
+                        top: calc(var(--p) * 1px);
+                        }
+
+                        section.maintenance .scroll.bottom {
+                        bottom: calc(var(--p) * 1px);
+                        }
+
+                        section.maintenance .scroll div {
                         --animation-time: 800s;
+                        padding: 2px 0;
                         background: #ffaa01;
                         color: #1d1104;
-                        font-size: 2em;
+                        font-size: 1.5em;
                         text-transform: uppercase;
                         letter-spacing: 0.2em;
                         font-weight: 600;
                         white-space: nowrap;
                         animation: animate1 var(--animation-time) linear infinite;
                         animation-delay: calc(var(--animation-time) * -1);
-                    }
-    
-                    section.maintenance .scroll div:nth-child(2) {
+                        }
+
+                        section.maintenance .scroll div:nth-child(2) {
                         animation: animate2 var(--animation-time) linear infinite;
                         animation-delay: calc(var(--animation-time) * -1 / 2);
-                    }
-    
-                    section.maintenance .scroll div span {
+                        }
+
+                        section.maintenance .scroll div span {
                         text-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-                    }
+                        }
     
                     @keyframes animate1 {
                         0% {
@@ -604,35 +611,35 @@ class Maintenance_Mode_Plugin {
                     </div>
     
                     <?php
-                    // Массив параметров для бегущих строк
-                    $scrolls = [
-                        ['d' => 7, 'y' => 40],
-                        ['d' => -5, 'y' => 840],
-                        ['d' => 3, 'y' => 700],
-                        ['d' => -5, 'y' => 50],
-                        ['d' => -25, 'y' => 900],
-                    ];
+                // Массив параметров для бегущих строк
+                $scrolls = [
+                    ['d' => 7, 'p' => 40, 'position' => 'top'],
+                    ['d' => -5, 'p' => 50, 'position' => 'top'],
+                    ['d' => 7, 'p' => 40, 'position' => 'bottom'],
+                    ['d' => -5, 'p' => 75, 'position' => 'bottom'],
+                    ['d' => -25, 'p' => -120, 'position' => 'bottom'],
+                ];
     
-                    foreach ($scrolls as $scroll) {
-                        ?>
-                        <div class="scroll" style="--d:<?php echo esc_attr($scroll['d']); ?>; --y:<?php echo esc_attr($scroll['y']); ?>;">
-                            <div>
-                                <span><?php _e('The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience', 'maintenance-mode-plugin'); ?></span>
-                            </div>
-                            <div>
-                                <span><?php _e('The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience', 'maintenance-mode-plugin'); ?></span>
-                            </div>
-                        </div>
-                        <?php
-                    }
+                foreach ($scrolls as $scroll) {
                     ?>
-                </section>
-            </body>
-            </html>
-            <?php
-        }
-        exit;
+                    <div class="scroll <?php echo esc_attr($scroll['position']); ?>" style="--d:<?php echo esc_attr($scroll['d']); ?>; --p:<?php echo esc_attr($scroll['p']); ?>;">
+                        <div>
+                            <span><?php _e('The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience', 'maintenance-mode-plugin'); ?></span>
+                        </div>
+                        <div>
+                            <span><?php _e('The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience - The site is under maintenance and will be available soon. We apologize for the inconvenience', 'maintenance-mode-plugin'); ?></span>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </section>
+        </body>
+        </html>
+        <?php
     }
+    exit;
+}
 
     /**
  * Определяет язык браузера пользователя
@@ -676,7 +683,7 @@ private function get_browser_language() {
 private function set_plugin_locale($lang) {
     $locale_map = [
         'ru' => 'ru_RU',
-        'uk' => 'uk_UA',
+        'uk' => 'uk',
         'pl' => 'pl_PL',
         'en' => 'en_US',
     ];
