@@ -281,10 +281,9 @@ class Maintenance_Mode_Plugin {
                         update_option('maintenance_mode_start_time', '');
                         update_option('maintenance_mode_end_time', '');
                         $completed_time = date_i18n('Y-m-d H:i', $end_timestamp);
-                        update_option('maintenance_mode_completed_notice', sprintf(
-                            /* translators: %s is the date and time when maintenance ended */
-                            __('Scheduled maintenance completed at %s.', 'maintenance-mode-plugin'),
-                            $completed_time
+                        update_option('maintenance_mode_completed_notice', array(
+                            'message_key' => 'Scheduled maintenance completed at %s.',
+                            'completed_time' => $completed_time
                         ));
                         error_log("Maintenance ended. Current: $current_time, End: $end_timestamp, Completed: $completed_time");
                     }
@@ -368,7 +367,18 @@ class Maintenance_Mode_Plugin {
 
         // Уведомление о завершении
         if (!empty($completed_notice)) {
-            echo '<div class="notice notice-success is-dismissible"><p><strong>' . __('Maintenance Mode:', 'maintenance-mode-plugin') . '</strong> ' . esc_html($completed_notice) . ' <a href="' . admin_url('options-general.php?page=maintenance-mode') . '">' . __('View settings', 'maintenance-mode-plugin') . '</a></p></div>';
+            if (is_array($completed_notice)) {
+                $message_key = $completed_notice['message_key'];
+                $completed_time = $completed_notice['completed_time'];
+                $translated_message = sprintf(
+                    __($message_key, 'maintenance-mode-plugin'),
+                    $completed_time
+                );
+            } else {
+                // Для обратной совместимости со старым форматом (строка)
+                $translated_message = $completed_notice;
+            }
+            echo '<div class="notice notice-success is-dismissible"><p><strong>' . __('Maintenance Mode:', 'maintenance-mode-plugin') . '</strong> ' . esc_html($translated_message) . ' <a href="' . admin_url('options-general.php?page=maintenance-mode') . '">' . __('View settings', 'maintenance-mode-plugin') . '</a></p></div>';
             update_option('maintenance_mode_completed_notice', '');
         }
     }

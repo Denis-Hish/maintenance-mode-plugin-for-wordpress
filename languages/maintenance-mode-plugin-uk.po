@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Maintenance Mode Plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-18 14:24+0000\n"
-"PO-Revision-Date: 2025-03-19 10:12+0000\n"
+"PO-Revision-Date: 2025-03-20 12:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -170,4 +170,4 @@ msgstr "Ми незабаром повернемося. Дякуємо за ва
 
 #: maintenance-mode-plugin.php:598
 msgid "Website currently"
-msgstr "Веб-сайт на даний момент знаходиться"
+msgstr "На даний момент сайт знаходиться"
