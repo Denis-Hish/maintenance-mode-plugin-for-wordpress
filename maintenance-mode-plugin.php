@@ -83,13 +83,6 @@ class Maintenance_Mode_Plugin {
             'maintenance_mode_settings_section'
         );
         add_settings_field(
-            'maintenance_mode_custom_html',
-            __('Custom HTML', 'maintenance-mode-plugin'),
-            array($this, 'render_custom_html_field'),
-            'maintenance-mode',
-            'maintenance_mode_settings_section'
-        );
-        add_settings_field(
             'maintenance_mode_start_time',
             __('Start Time (optional)', 'maintenance-mode-plugin'),
             array($this, 'render_start_time_field'),
@@ -107,6 +100,13 @@ class Maintenance_Mode_Plugin {
             'maintenance_mode_allowed_roles',
             __('Allowed Roles', 'maintenance-mode-plugin'),
             array($this, 'render_allowed_roles_field'),
+            'maintenance-mode',
+            'maintenance_mode_settings_section'
+        );
+        add_settings_field(
+            'maintenance_mode_custom_html',
+            __('Custom HTML', 'maintenance-mode-plugin'),
+            array($this, 'render_custom_html_field'),
             'maintenance-mode',
             'maintenance_mode_settings_section'
         );
@@ -131,11 +131,6 @@ class Maintenance_Mode_Plugin {
         echo '<input type="checkbox" name="maintenance_mode_enabled" value="1"' . checked(1, $value, false) . '>';
     }
 
-    public function render_custom_html_field() {
-        $value = get_option('maintenance_mode_custom_html');
-        echo '<textarea name="maintenance_mode_custom_html" rows="10" cols="50" class="large-text">' . esc_textarea($value) . '</textarea>';
-    }
-
     public function render_start_time_field() {
         $value = get_option('maintenance_mode_start_time', '');
         echo '<input type="datetime-local" name="maintenance_mode_start_time" value="' . esc_attr($value) . '">';
@@ -157,6 +152,11 @@ class Maintenance_Mode_Plugin {
             echo '<label><input type="checkbox" name="maintenance_mode_allowed_roles[]" value="' . esc_attr($role_key) . '" ' . $checked . '> ' . esc_html($role_data['name']) . '</label><br>';
         }
         echo '<p class="description">' . __('Select roles that can access the site during maintenance.', 'maintenance-mode-plugin') . '</p>';
+    }
+
+    public function render_custom_html_field() {
+        $value = get_option('maintenance_mode_custom_html');
+        echo '<textarea name="maintenance_mode_custom_html" rows="10" cols="50" class="large-text">' . esc_textarea($value) . '</textarea>';
     }
 
     private function get_maintenance_status() {
